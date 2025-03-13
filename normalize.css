@@ -1,0 +1,49 @@
+/* Убираем отступы и padding у всех элементов */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Упрощает работу с шириной и padding */
+  }
+  
+  /* Убираем стандартные стили для списков */
+  ul, ol {
+    list-style: none;
+  }
+  
+  /* Убираем подчеркивание у ссылок */
+  a {
+    text-decoration: none;
+  }
+  
+  /* Делаем изображения адаптивными */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* Убираем стандартные стили для кнопок и полей ввода */
+  button, input, textarea, select {
+    font: inherit; /* Наследуем шрифт */
+    background: none;
+    border: none;
+    outline: none;
+  }
+  
+  /* Убираем стандартные отступы у заголовков */
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+  
+  /* Убираем стандартные отступы у абзацев */
+  p {
+    margin: 0;
+  }
+  
+  /* Убираем стандартные стили для таблиц */
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }

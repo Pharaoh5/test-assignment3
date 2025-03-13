@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>dialog</title>
+</head>
+<body>
+    <div class="container">
+        <button id="openModalButton">Добавить товар</button>
+    </div>
+    <div id="modalOverlay"></div>
+     <!-- modal -->
+    <div class="dialog" id="modalWindow">
+        <button id="closeModalButton"></button>
+        <h2 class="dialog__title">Калькулятор</h2>
+        <!-- step-one -->
+        <div class="dialog__step-one step-one">
+            <h3 class="step-one__title"><span class="violet">Шаг 1</span> Добавьте товары или выберите заказ</h3>
+            <div class="label-input">
+                <label for="order">Выберите заказ</label>
+                <input type="number" name="order" id="order" placeholder="Начните вводить номер заказа" class="custom-input-arrow">
+            </div>
+            <div class="step-one__products" id="products">
+                <script id="product" type="text/x-handlebars-template">
+                    <div class="step-one__product product" id="product-{{number}}">
+                        <div class="product__removep-div"><button class="product__remove-button" data-number="{{number}}"></button></div>
+                        <h3 class="product__title"><span class="violet">Товар {{number}}</span></h3>
+                        <div class="label-input">
+                            <label for="name-{{number}}" class="product__name-label">Название товара</label>
+                            <input type="text" name="name" autocomplete="name" id="name-{{number}}" class="product__name-input" placeholder="Введите название товара"/>
+                        </div>
+                        <p class="product__subtitle">Скорее всего, это <span class="violet">линия "Одежда"</span></p>
+                        <div class="product__data data">
+                            <h4 class="data__title">Введите транспортировочные данные</h4>
+                            <div class="data-flex">
+                                <div class="label-input" >
+                                    <label for="length-{{number}}" class="data__length-label">Длина, см</label>
+                                    <input type="number" name="length" autocomplete="length" id="length-{{number}}" class="data__length-input" placeholder="Длина"/>
+                                </div>
+                                <div class="label-input" >
+                                    <label for="width-{{number}}" class="data__width-label">Ширина, см</label><br/>
+                                    <input type="number" name="width" autocomplete="width" id="width-{{number}}" class="data__width-input" placeholder="Ширина"/>
+                                </div>
+                                <div class="label-input" >
+                                    <label for="height-{{number}}" class="data__height-label">Высота, см</label>
+                                    <input type="number" name="height" autocomplete="height" id="height-{{number}}" class="data__height-input" placeholder="Высота"/>
+                                </div>
+                                или
+                                <div class="label-input" >
+                                    <label for="volume-{{number}}" class="data__volume-label">Введите объём</label>
+                                    <input type="number" name="volume" autocomplete="volume" id="volume-{{number}}" class="data__volume-input" placeholder="Объём"/>
+                                </div>
+                            </div>
+                            <div class="data-column">
+                                <div class="label-input" >
+                                    <label for="weight-{{number}}" class="data__weight-label">Вес коробки, кг</label>
+                                    <input type="number" name="weight" autocomplete="weight" id="weight-{{number}}" class="data__weight-input" placeholder="Введите вес коробки"/>
+                                </div>
+                                <div class="label-input" >
+                                    <label for="quantity-{{number}}" class="data__quantity-label">Кол-во коробок, шт</label>
+                                    <input type="number" name="quantity" autocomplete="quantity" id="quantity-{{number}}" class="data__quantity-input" placeholder="Введите кол-во коробок"/>
+                                </div>
+                                <div class="label-input" >
+                                    <label for="durability-{{number}}" class="data__durability-label">Стоймость товара, ¥</label>
+                                    <input type="number" name="durability" autocomplete="durability" id="durability-{{number}}" class="data__durability-input" placeholder="Введите общую стоймость всего товара"/>
+                                </div>
+                                <div class="label-input" >
+                                    <input type="checkbox" name="Хрупкий товар" autocomplete="Хрупкий товар" id="fragile-{{number}}" class="data__checkbox-input"/>
+                                    <label for="fragile-{{number}}" class="data__checkbox-label">Хрупкий товар</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </script>
+            </div>
+            <button class="step-one__button" id="addProductButton">
+                <span class="add-icon"></span> <span class="violet">Добавить товар</span>
+              </button>
+            <div class="step-one__result result">
+                <h3 class="result__title">Результат подсчета</h3>
+                <div class="result__flex">
+                    <div class="label-input">
+                        <label for="weight">Общий вес</label>
+                        <input type="number" name="weight" id="total-weight" class="bc-input" disabled>
+                    </div>
+                    <div class="label-input">
+                        <label for="volume">Общий объем</label>
+                        <input type="number" name="volume" id="total-volume" class="bc-input" disabled>
+                    </div>
+                    <div class="label-input">
+                        <label for="density">Плотность товаров</label>
+                        <input type="number" name="density" id="total-density" class="bc-input" disabled>
+                    </div>
+                    <div class="label-input">
+                        <label for="durability">Стоймость товара, $</label>
+                        <input type="number" name="durability" id="total-durability" class="bc-input" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- step-two -->
+        <div class="dialog__step-two step-two">
+            <p class="step-two__advice">Совет: используйте <span class="violet">Обрешётку</span></p>
+            <h3 class="step-two__title"><span class="violet">Шаг 2</span> Укажите упаковку</h3>
+            <input type="text" name="packaging" id="packaging" class="step-two__input custom-input-arrow" value="Выберите упаковку" placeholder="Выберите упаковку">
+            <div class="step-two__packaging packaging">
+                <div class="packaging__piece"><span class="violet">Пупырка</span></div>
+                <div class="packaging__piece"><span class="violet">Паллета</span></div>
+            </div>
+            <div class="step-one__result result">
+                <h3 class="result__title">Перерасчёт с учётом упаковки</h3>
+                <div class="result__flex">
+                    <div class="label-input">
+                        <label for="weight">Итого вес</label>
+                        <input type="number" name="weight" id="weight" class="bc-input" disabled>
+                    </div>
+                    <div class="label-input">
+                        <label for="volume">Итого объем</label>
+                        <input type="number" name="volume" id="volume" class="bc-input" disabled>
+                    </div>
+                    <div class="label-input">
+                        <label for="density">Итого плотность</label>
+                        <input type="number" name="density" id="density" class="bc-input" disabled>
+                    </div>
+                    <div class="label-input">
+                        <label for="durability">Страховка, %</label>
+                        <input type="number" name="durability" id="durability" class="bc-input" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- details -->
+        <div class="dialog__details details">
+            <h3 class="details__title">Детализация предварительного расчёта стоймости перевозки</h3>
+            <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>10-15 дней</th>
+                    <th>18-25 дней</th>
+                    <th>20-30 дней</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Ставка за кг</td>
+                    <td>2.2 $</td>
+                    <td>2.2 $</td>
+                    <td>2.2 $</td>
+                  </tr>
+                  <tr>
+                    <td>Стоимость доставки</td>
+                    <td>200.2 $</td>
+                    <td>200.2 $</td>
+                    <td>200.2 $</td>
+                  </tr>
+                  <tr>
+                    <td>Упаковка</td>
+                    <td>68.0 $</td>
+                    <td>68.0 $</td>
+                    <td>68.0 $</td>
+                  </tr>
+                  <tr>
+                    <td>Разгрузка</td>
+                    <td>72.0 $</td>
+                    <td>72.0 $</td>
+                    <td>72.0 $</td>
+                  </tr>
+                  <tr>
+                    <td>Страховка</td>
+                    <td>60.0 $</td>
+                    <td>60.0 $</td>
+                    <td>60.0 $</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <!-- save-button -->
+        <button class="dialog__button">Сохранить расчет</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
